@@ -37,14 +37,10 @@ the engine, create the scene node and a camera, and look at the result.
 */
 int main()
 {
-    // ask user for driver
-    video::E_DRIVER_TYPE driverType= video::EDT_OPENGL;//driverChoiceConsole();
-    if (driverType==video::EDT_COUNT)
-        return 1;
-
     // create device
+    IrrlichtDevice *device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 16, false);
+    device->setResizable(false);
 
-    IrrlichtDevice *device = createDevice(driverType, core::dimension2d<u32>(800, 600), 16, false);
 
     if (device == 0)
         return 1; // could not create selected driver.
@@ -68,6 +64,7 @@ int main()
     the reference count of the object is after creation.
     */
     CSampleSceneNode *myNode = new CSampleSceneNode(smgr->getRootSceneNode(), smgr, 666);
+    //    myNode->setRotation(core::vector3df(60.0f, 90.0f, 45.0f));
 
     /*
     To animate something in this boring scene consisting only of one
@@ -77,18 +74,19 @@ int main()
     irr::scene::ISceneManager::createRotationAnimator() could return 0, so
     should be checked.
     */
-    scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0.8f, 0, 0.8f));
+    scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(.0f, 0.0f, .3f));
 
+    device->getCursorControl()->setVisible(false);
     if(anim)
     {
-        myNode->addAnimator(anim);
+        myNode->addAnimator( anim );
 
         /*
-        I'm done referring to anim, so must
-        irr::IReferenceCounted::drop() this reference now because it
-        was produced by a createFoo() function. As I shouldn't refer to
-        it again, ensure that I can't by setting to 0.
-        */
+            I'm done referring to anim, so must
+            irr::IReferenceCounted::drop() this reference now because it
+            was produced by a createFoo() function. As I shouldn't refer to
+            it again, ensure that I can't by setting to 0.
+            */
         anim->drop();
         anim = 0;
     }
@@ -108,20 +106,30 @@ int main()
     u32 frames=0;
     while(device->run())
     {
-        driver->beginScene(true, true, video::SColor(0,100,100,100));
-
-        smgr->drawAll();
-
-        driver->endScene();
-        if (++frames==100)
+        //if(device->isWindowActive())
         {
-            core::stringw str = L"Irrlicht - OctopusStudio [";
-            str += driver->getName();
-            str += L"] FPS: ";
-            str += (s32)driver->getFPS();
+            driver->beginScene(true, true, video::SColor(0,100,100,127));
+            core::position2d<s32> m = device->getCursorControl()->getPosition();
+//            driver->draw2DRectangleOutline(core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));
 
-            device->setWindowCaption(str.c_str());
-            frames=0;
+            driver->draw2DRectangle(video::SColor(255,255,255,0), core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));
+            driver->draw2DRectangle(video::SColor(255,0,0,255), core::rect<s32>(m.X-16, m.Y-15, m.X-10, m.Y-9));
+            driver->draw2DRectangle(video::SColor(255,0,255,0), core::rect<s32>(m.X+10, m.Y-15, m.X+16, m.Y-9));
+
+            //        driver->setFog(video::SColor(127,255,255,255), video::EFT_FOG_LINEAR, 10.f, 100.f, 0.01f, false, false);
+            smgr->drawAll();
+
+            driver->endScene();
+            if (++frames==100)
+            {
+                core::stringw str = L"Irrlicht - OctopusStudio [";
+                str += driver->getName();
+                str += L"] FPS: ";
+                str += (s32)driver->getFPS();
+
+                device->setWindowCaption(str.c_str());
+                frames=0;
+            }
         }
     }
 
@@ -129,7 +137,3 @@ int main()
 
     return 0;
 }
-
-/*
-That's it. Compile and play around with the program.
-**/

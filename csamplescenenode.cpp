@@ -22,15 +22,14 @@ irr::scene::ISceneNode class and has to override some methods.
     {
         Material.Wireframe = false;
         Material.Lighting = false;
+        Material.AntiAliasing = video::EAAM_FULL_BASIC;
 
-        Vertices[0] = video::S3DVertex(0,0,10, 1,1,0,
-                video::SColor(255,0,255,255), 0, 1);
-        Vertices[1] = video::S3DVertex(10,0,-10, 1,0,0,
-                video::SColor(255,255,0,255), 1, 1);
-        Vertices[2] = video::S3DVertex(0,20,0, 0,1,1,
-                video::SColor(255,255,255,0), 1, 0);
-        Vertices[3] = video::S3DVertex(-10,0,-10, 0,0,1,
-                video::SColor(255,0,255,0), 0, 0);
+        Vertices[0] = video::S3DVertex( 0, 0, 10, 1,1,0, video::SColor(255,  0, 255, 255), 0, 1);
+        Vertices[1] = video::S3DVertex(10, 0,-10, 1,0,0, video::SColor(255,255 ,  0, 255), 1, 1);
+        Vertices[2] = video::S3DVertex( 0,10,  0, 0,1,1, video::SColor(127,255, 255,   0), 1, 0);
+        Vertices[3] = video::S3DVertex(-10,0,-10, 0,0,1, video::SColor(255,  0, 255,   0), 0, 0);
+//        Vertices[4] = video::S3DVertex(-20,0,-20, 1,0,1,
+//                video::SColor(127,0,255,0), 0, 0);
 
     /*
     The Irrlicht Engine needs to know the bounding box of a scene node.
