@@ -27,3 +27,6 @@ unix: LIBS += -lXcursor
 
 HEADERS += \
     csamplescenenode.h
+
+OTHER_FILES += \
+    README.md
