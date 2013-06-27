@@ -22,6 +22,7 @@ irr::scene::ISceneNode class and has to override some methods.
     {
         Material.Wireframe = false;
         Material.Lighting = false;
+//        Material.FogEnable = true;
         Material.AntiAliasing = video::EAAM_FULL_BASIC;
 
         Vertices[0] = video::S3DVertex( 0, 0, 10, 1,1,0, video::SColor(255,  0, 255, 255), 0, 1);

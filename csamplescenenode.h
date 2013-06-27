@@ -41,7 +41,7 @@ class CSampleSceneNode : public scene::ISceneNode
 public:
 
     CSampleSceneNode(scene::ISceneNode* parent, scene::ISceneManager* mgr, s32 id);
-//        : scene::ISceneNode(parent, mgr, id)
+    //        : scene::ISceneNode(parent, mgr, id)
 
 
 

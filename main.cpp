@@ -74,7 +74,7 @@ int main()
     irr::scene::ISceneManager::createRotationAnimator() could return 0, so
     should be checked.
     */
-    scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(.0f, 0.0f, .3f));
+    scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(.0f, 0.1f, .4f));
 
     device->getCursorControl()->setVisible(false);
     if(anim)
@@ -109,6 +109,10 @@ int main()
         //if(device->isWindowActive())
         {
             driver->beginScene(true, true, video::SColor(0,100,100,127));
+
+            smgr->drawAll(); //Drawing before Cursor
+
+
             core::position2d<s32> m = device->getCursorControl()->getPosition();
 //            driver->draw2DRectangleOutline(core::rect<s32>(m.X-20, m.Y-20, m.X+20, m.Y+20));
 
@@ -117,7 +121,7 @@ int main()
             driver->draw2DRectangle(video::SColor(255,0,255,0), core::rect<s32>(m.X+10, m.Y-15, m.X+16, m.Y-9));
 
             //        driver->setFog(video::SColor(127,255,255,255), video::EFT_FOG_LINEAR, 10.f, 100.f, 0.01f, false, false);
-            smgr->drawAll();
+
 
             driver->endScene();
             if (++frames==100)
